@@ -1,0 +1,15 @@
+[{
+  "name": "blog",
+  "script": "src/start.js",
+  "error_file": "src/logs/app-err.log",
+  "out_file": "src/logs/app-out.log",
+  "env_dev": {
+    "NODE_ENV": "development"
+  },
+  "env_production": {
+    "NODE_ENV": "production"
+  }
+}]
+// pm2 install pm2-logrotate
+// pm2 set pm2-logrotate:retain 100
+// pm2 set pm2-logrotate:size 1M
