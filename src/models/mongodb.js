@@ -40,11 +40,9 @@ db.once('open', () => {
 mongoose.connection.on("error", console.error);
 
 function createData() {
-  var userIds = [123, 123, 123];
-  var postIds = [123, 123, 123];
-  var commentIds = [123, 123, 123];
-
-  console.log(userIds);
+  var userIds = [new Date(), new Date(), new Date()];
+  var postIds = [new Date(), new Date(), new Date()];
+  var commentIds = [new Date(), new Date(), new Date()];
 
   var users = [];
   var posts = [];
@@ -105,9 +103,10 @@ function createData() {
   });
 
   User.create(users, function(err, docs) {
-    //   if (err) console.error(err)
-    Post.create(posts, function(err, docs) {
-      Comment.create(comments, function(err, docs) {});
-    });
+      console.log(err);
+      console.log('docs: ', docs);
+    // Post.create(posts, function(err, docs) {
+    //   Comment.create(comments, function(err, docs) {});
+    // });
   });
 }
