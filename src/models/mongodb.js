@@ -102,6 +102,8 @@ function createData() {
     post: postIds[2]
   });
 
+const user = new User(users)
+const user_result = user.save().catch(err => console.error)
   User.create(users, function(err, docs) {
       console.log(err);
       console.log('docs: ', docs);
