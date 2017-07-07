@@ -3,7 +3,7 @@ const router = Router();
 import { createTag, listTag, deleteTagByName, deleteAll } from '../controllers/tag';
 
 router.get('/', async (ctx, next) => {
-  ctx.body = 'this a users response';
+  ctx.body = 'this a tag response';
 });
 
 router.post('/add', createTag);

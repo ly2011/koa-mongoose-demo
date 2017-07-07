@@ -6,6 +6,8 @@ import json from 'koa-json';
 import BodyParser from 'koa-bodyparser';
 import logger from 'koa-logger';
 
+import config from './configs'
+
 const app = new Koa();
 onerror(app);
 
@@ -23,6 +25,7 @@ import './models/mongodb';
 import users from './routes/user';
 import tags from './routes/tag'
 import articles from './routes/article'
+import comments from './routes/comment'
 
 // logger
 app.use(async (ctx, next) => {
@@ -39,11 +42,12 @@ router.use('/favicon.ico', ctx => {
 router.use('/user', users.routes(), users.allowedMethods());
 router.use('/tag', tags.routes(), tags.allowedMethods());
 router.use('/article', articles.routes(), articles.allowedMethods());
+router.use('/comment', comments.routes(), comments.allowedMethods());
 app.use(router.routes()).use(router.allowedMethods());
 
 // create server
-app.listen(3000, () => {
-  console.log('The server is running at http://localhost:' + 3000);
+app.listen(config.app.port, () => {
+  console.log('The server is running at http://localhost:' + config.app.port);
 });
 
 export default app;

@@ -33,7 +33,7 @@ export async function createArticle(ctx) {
     return;
   }
   if (!!tags) {
-    tags = tags.split(',');
+    tags = tags.split(",");
   }
   console.log(tags);
 
@@ -63,12 +63,17 @@ export async function createArticle(ctx) {
 
 export async function getAllArticles(ctx) {
   try {
-    const articles = await Article.find({});
+    // const articles = await Article.find({});
+    const articles = await Article.find({}).populate({
+      path: "tags",
+      select: { name: 1, _id: 1, id: 1 }, // _id以外，要么全是1，要么全是0，否则就报错
+      options: { title: -1 }
+    });
     ctx.body = {
       success: true,
       list: articles
     };
   } catch (err) {
-    ctx.throw(500, "服务器错误");
+    ctx.throw(500, "服务器错误", err);
   }
 }
