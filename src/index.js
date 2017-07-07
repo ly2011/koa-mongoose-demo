@@ -21,6 +21,8 @@ import './models/mongodb';
 
 // 导入路由
 import users from './routes/user';
+import tags from './routes/tag'
+import articles from './routes/article'
 
 // logger
 app.use(async (ctx, next) => {
@@ -35,6 +37,8 @@ router.use('/favicon.ico', ctx => {
   return;
 });
 router.use('/user', users.routes(), users.allowedMethods());
+router.use('/tag', tags.routes(), tags.allowedMethods());
+router.use('/article', articles.routes(), articles.allowedMethods());
 app.use(router.routes()).use(router.allowedMethods());
 
 // create server
