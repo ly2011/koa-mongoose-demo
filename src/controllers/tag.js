@@ -4,9 +4,9 @@ export async function createTag(ctx) {
   if (!tagName) {
     ctx.body = {
       status: 401,
-      message: '标签名为空'
-    }
-    return
+      message: "标签名为空"
+    };
+    return;
   }
   let tag = null;
   try {
@@ -85,7 +85,7 @@ export async function deleteTagByName(ctx) {
   };
 }
 
-export async function deleteAll(ctx) {
+export async function deleteAllTags(ctx) {
   const conditions = {};
   try {
     await Tag.remove(conditions);
@@ -96,4 +96,59 @@ export async function deleteAll(ctx) {
     success: true,
     message: `tag全部删除成功`
   };
+}
+
+export async function getAllTags(ctx) {
+  try {
+    const tags = Tag.find();
+    ctx.body = {
+      success: true,
+      list: tags
+    };
+  } catch (err) {
+    throw (500, "服务器错误", err);
+  }
+}
+
+export async function updateTag(ctx) {
+  const id = ctx.request.body.id;
+  const name = ctx.request.body.name;
+  if (!name) {
+    ctx.body = {
+      status: 401,
+      message: "标签名不能为空"
+    };
+    return;
+  }
+  try {
+    const tag = await Tag.findByIdAndUpdate(id, { $set: { name } });
+    ctx.body = {
+      success: true,
+      tag: tag
+    }
+  } catch (err) {
+    if (err.name === 'CastError') {
+      ctx.throw(400, 'id不存在')
+    } else {
+      ctx.throw(500, '服务器内部错误')
+    }
+  }
+}
+
+export async function deleteTag(ctx) {
+  const id = ctx.request.body.id
+  console.log(id);
+  try {
+    const tag = await Tag.findByIdAndRemove(id)
+    ctx.body = {
+      success: true,
+      tag: tag
+    }
+  } catch(err) {
+    if (err.name = 'CastError') {
+      ctx.throw(400, 'id不存在')
+    } else {
+      ctx.throw(500, '服务器错误')
+    }
+  }
 }
