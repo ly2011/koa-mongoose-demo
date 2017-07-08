@@ -1,6 +1,10 @@
 [{
   "name": "blog",
   "script": "src/start.js",
+  "exec_mode": "cluster",
+    "instances": 0,
+    "max_memory_restart": "256M",
+    "autorestart": true,
   "error_file": "src/logs/app-err.log",
   "out_file": "src/logs/app-out.log",
   "env_dev": {

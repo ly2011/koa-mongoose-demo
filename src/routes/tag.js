@@ -1,4 +1,5 @@
 import Router from "koa-router";
+import verify from "../middleware/verify";
 const router = Router();
 import {
   createTag,
@@ -13,6 +14,7 @@ router.get("/", async (ctx, next) => {
   ctx.body = "this a tag response";
 });
 
+// router.post("/add", verify, createTag);
 router.post("/add", createTag);
 router.get("/list", listTag);
 router.all("/delete_by_name", deleteTagByName);

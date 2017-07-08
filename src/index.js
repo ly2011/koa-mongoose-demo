@@ -7,6 +7,7 @@ import bodyParser from "koa-bodyparser";
 import logger from "koa-logger";
 
 import config from "./configs";
+import api from "./api";
 
 const app = new Koa();
 onerror(app);
@@ -19,8 +20,8 @@ app.use(
     enableTypes: ["json", "form", "text"]
   })
 );
-app.use(convert(json()));
-app.use(convert(logger()));
+app.use(json());
+app.use(logger());
 
 import "./models/mongodb";
 
@@ -42,10 +43,13 @@ app.use(async (ctx, next) => {
 router.use("/favicon.ico", ctx => {
   return;
 });
-router.use("/user", users.routes(), users.allowedMethods());
-router.use("/tag", tags.routes(), tags.allowedMethods());
-router.use("/article", articles.routes(), articles.allowedMethods());
-router.use("/comment", comments.routes(), comments.allowedMethods());
+
+// api/router
+app.use(api());
+// router.use("/user", users.routes(), users.allowedMethods());
+// router.use("/tag", tags.routes(), tags.allowedMethods());
+// router.use("/article", articles.routes(), articles.allowedMethods());
+// router.use("/comment", comments.routes(), comments.allowedMethods());
 app.use(router.routes()).use(router.allowedMethods());
 
 // create server

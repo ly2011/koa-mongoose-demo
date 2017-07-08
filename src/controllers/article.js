@@ -77,3 +77,88 @@ export async function getAllArticles(ctx) {
     ctx.throw(500, "服务器错误", err);
   }
 }
+
+export async function updateArticle(ctx) {
+  const { id, title, content, abstract, tags } = ctx.request.body;
+  if (!title) {
+    ctx.body = {
+      status: 401,
+      message: "标题不能为空"
+    };
+    return;
+  }
+  if (!content) {
+    ctx.body = {
+      status: 401,
+      message: "文章内容不能为空"
+    };
+    return;
+  }
+  if (!abstract) {
+    ctx.body = {
+      status: 401,
+      message: "文章摘要不能为空"
+    };
+    return;
+  }
+  const update_article = {
+    title,
+    content,
+    abstract
+  };
+  try {
+    const article = await Article.findByIdAndUpdate(id, {
+      $set: update_article
+    });
+    ctx.body = {
+      success: true,
+      article
+    };
+  } catch (err) {
+    if (err.name === "CastError") {
+      ctx.throw(401, "id不存在");
+    } else {
+      ctx.throw(500, "服务器错误");
+    }
+  }
+}
+
+export async function getArticle(ctx) {
+  const id = ctx.params.id;
+  if (!id) {
+    ctx.body = {
+      status: 401,
+      message: "id不能为空"
+    };
+    return;
+  }
+  try {
+    const article = await Article.findById(id);
+    ctx.body = {
+      success: true,
+      article
+    };
+  } catch (err) {
+    ctx.throw(500, "服务器错误");
+  }
+}
+
+export async function deleteArticle(ctx) {
+  const id = ctx.params.id;
+  if (!id) {
+    ctx.body = {
+      status: 401,
+      message: "id不能为空"
+    };
+    return;
+  }
+  try {
+    const article = await Article.findByIdAndRemove(id);
+    ctx.body = {
+      success: true,
+      article
+    };
+  } catch (err) {
+    ctx.throw(500, "服务器错误");
+  }
+}
