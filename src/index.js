@@ -26,10 +26,6 @@ app.use(logger());
 import "./models/mongodb";
 
 // 导入路由
-import users from "./routes/user";
-import tags from "./routes/tag";
-import articles from "./routes/article";
-import comments from "./routes/comment";
 
 // logger
 app.use(async (ctx, next) => {
