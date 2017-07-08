@@ -6,7 +6,8 @@
   "scripts": {
     "start": "cross-env NODE_ENV=production node server/start.js",
     "dev": "nodemon src/start.js",
-    "pm2": "npm run build && pm2 start pm2.json --env production"
+    "pm2": "npm run build && pm2 start pm2.json --env production",
+    "precommit": "lint-staged"
   },
   "keywords": [],
   "author": "",
@@ -35,6 +36,13 @@
     "babel-preset-stage-0": "^6.24.1",
     "cross-env": "^5.0.1",
     "eslint": "^4.1.1",
-    "nodemon": "^1.11.0"
+    "eslint-plugin-prettier": "^2.1.2",
+    "husky": "^0.14.3",
+    "lint-staged": "^4.0.1",
+    "nodemon": "^1.11.0",
+    "prettier": "^1.5.2"
+  },
+  "lint-staged": {
+    "*.js": ["prettier --write", "git add"]
   }
 }
