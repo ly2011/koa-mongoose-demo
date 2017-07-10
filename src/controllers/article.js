@@ -124,7 +124,7 @@ export async function updateArticle(ctx) {
 }
 
 export async function getArticle(ctx) {
-  const id = ctx.params.id;
+  const id = ctx.request.body.id || ctx.query.id;
   if (!id) {
     ctx.body = {
       status: 401,
@@ -144,7 +144,7 @@ export async function getArticle(ctx) {
 }
 
 export async function deleteArticle(ctx) {
-  const id = ctx.params.id;
+  const id = ctx.request.body.id || ctx.query.id;
   if (!id) {
     ctx.body = {
       status: 401,
@@ -159,6 +159,6 @@ export async function deleteArticle(ctx) {
       article
     };
   } catch (err) {
-    ctx.throw(500, "服务器错误");
+    ctx.throw(500, "服务器错误", err);
   }
 }

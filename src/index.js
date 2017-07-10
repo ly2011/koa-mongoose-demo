@@ -10,7 +10,7 @@ import config from "./configs";
 import api from "./api";
 
 const app = new Koa();
-onerror(app);
+// onerror(app);
 
 const router = Router();
 
@@ -47,6 +47,10 @@ app.use(api());
 // router.use("/article", articles.routes(), articles.allowedMethods());
 // router.use("/comment", comments.routes(), comments.allowedMethods());
 app.use(router.routes()).use(router.allowedMethods());
+
+app.on("error", err => {
+  console.error(err);
+});
 
 // create server
 app.listen(config.app.port, () => {

@@ -125,30 +125,30 @@ export async function updateTag(ctx) {
     ctx.body = {
       success: true,
       tag: tag
-    }
+    };
   } catch (err) {
-    if (err.name === 'CastError') {
-      ctx.throw(400, 'id不存在')
+    if (err.name === "CastError") {
+      ctx.throw(400, "id不存在");
     } else {
-      ctx.throw(500, '服务器内部错误')
+      ctx.throw(500, "服务器内部错误");
     }
   }
 }
 
 export async function deleteTag(ctx) {
-  const id = ctx.request.body.id
+  const id = ctx.request.body.id || ctx.request.query.id;
   console.log(id);
   try {
-    const tag = await Tag.findByIdAndRemove(id)
+    const tag = await Tag.findByIdAndRemove(id);
     ctx.body = {
       success: true,
       tag: tag
-    }
-  } catch(err) {
-    if (err.name = 'CastError') {
-      ctx.throw(400, 'id不存在')
+    };
+  } catch (err) {
+    if ((err.name = "CastError")) {
+      ctx.throw(400, "id不存在");
     } else {
-      ctx.throw(500, '服务器错误')
+      ctx.throw(500, "服务器错误");
     }
   }
 }
