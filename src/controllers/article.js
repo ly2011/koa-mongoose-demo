@@ -57,7 +57,7 @@ export async function createArticle(ctx) {
       article: createResult
     };
   } catch (err) {
-    ctx.throw(500, "服务器错误", err);
+    ctx.throw(500, "服务器错误");
   }
 }
 
@@ -74,7 +74,7 @@ export async function getAllArticles(ctx) {
       list: articles
     };
   } catch (err) {
-    ctx.throw(500, "服务器错误", err);
+    ctx.throw(500, "服务器错误");
   }
 }
 
@@ -159,6 +159,6 @@ export async function deleteArticle(ctx) {
       article
     };
   } catch (err) {
-    ctx.throw(500, "服务器错误", err);
+    ctx.throw(500, "服务器错误");
   }
 }

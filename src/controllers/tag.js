@@ -29,7 +29,7 @@ export async function createTag(ctx) {
   try {
     tagResult = await newTag.save();
   } catch (err) {
-    ctx.throw(500, "服务器错误", err);
+    ctx.throw(500, "服务器错误");
   }
 
   ctx.body = {
@@ -106,7 +106,7 @@ export async function getAllTags(ctx) {
       list: tags
     };
   } catch (err) {
-    throw (500, "服务器错误", err);
+    ctx.throw(500, "服务器错误");
   }
 }
 

@@ -10,7 +10,11 @@ import config from "./configs";
 import api from "./api";
 
 const app = new Koa();
-// onerror(app);
+onerror(app, {
+  accepts() {
+    return "json";
+  }
+});
 
 const router = Router();
 
@@ -49,7 +53,7 @@ app.use(api());
 app.use(router.routes()).use(router.allowedMethods());
 
 app.on("error", err => {
-  console.error(err);
+  // console.error(err);
 });
 
 // create server

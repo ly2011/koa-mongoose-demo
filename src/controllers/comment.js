@@ -60,7 +60,7 @@ export async function createComment(ctx) {
       comment: createResult
     };
   } catch (err) {
-    ctx.throw(500, "服务器错误", err);
+    ctx.throw(500, "服务器错误");
   }
 }
 export async function getAllComments(ctx) {
@@ -73,6 +73,6 @@ export async function getAllComments(ctx) {
       list: comments
     };
   } catch (err) {
-    ctx.throw(500, "服务器错误", err);
+    ctx.throw(500, "服务器错误");
   }
 }
