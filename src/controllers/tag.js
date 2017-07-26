@@ -20,6 +20,7 @@ export async function createTag(ctx) {
       success: true,
       tag
     };
+    return;
   }
   const newTag = new Tag({
     name: tagName

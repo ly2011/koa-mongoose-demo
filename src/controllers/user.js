@@ -1,7 +1,7 @@
 import User from "../models/user";
 import md5 from "md5";
 import jwt from "jsonwebtoken";
-import config from '../configs'
+import config from "../configs";
 
 export async function createUser(ctx) {
   let users = null;
@@ -10,7 +10,7 @@ export async function createUser(ctx) {
   } catch (err) {
     throw (500, "服务器错误");
   }
-  console.log(users);
+  // console.log(users);
   if (users.length === 0) {
     users = {
       name: "ly",
@@ -48,55 +48,58 @@ export async function listUser(ctx) {
       list: users
     };
   } catch (err) {
-    ctx.staus = err.staus || 500;
+    ctx.status = err.staus || 500;
     ctx.body = {
       message: "服务器错误"
     };
   }
 }
 
-export async function login (ctx) {
-  const username = ctx.request.body.username
-  let password = ctx.request.body.password
+export async function login(ctx) {
+  const username = ctx.request.body.username;
+  let password = ctx.request.body.password;
   if (!username || !password) {
     ctx.body = {
       status: 401,
-      message: '用户名或密码为空'
-    }
-    return
+      message: "用户名或密码为空"
+    };
+    return;
   }
   password = md5(password).toUpperCase();
   try {
     const conditions = {
       username
-    }
-    let user = await User.findOne(conditions)
+    };
+    let user = await User.findOne(conditions);
     if (!!user) {
       if (user.password === password) {
-        const token = jwt.sign({
-          uid: user._id,
-          name: user.name,
-          exp: Math.floor(Date.now() / 1000) + 24 * 60 * 60 //1 hours
-        }, config.jwt.secret)
+        const token = jwt.sign(
+          {
+            uid: user._id,
+            name: user.name,
+            exp: Math.floor(Date.now() / 1000) + 24 * 60 * 60 //1 hours
+          },
+          config.jwt.secret
+        );
         ctx.body = {
           success: true,
           uid: user._id,
           name: user.name,
           token
-        }
+        };
       } else {
         ctx.body = {
           status: 401,
-          message: '密码错误'
-        }
+          message: "密码错误"
+        };
       }
     } else {
       ctx.body = {
         status: 401,
-        message: '该用户不存在'
-      }
+        message: "该用户不存在"
+      };
     }
-  } catch(err) {
-    ctx.throw(500, '服务器错误')
+  } catch (err) {
+    ctx.throw(500, "服务器错误");
   }
 }
