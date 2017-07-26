@@ -1,0 +1,6 @@
+check:
+    global:
+        statements: 0
+        lines: 0
+        branches: 0       // 这个是指 if/else 等分支的覆盖率，很容易理解偏 --!
+        functions: 0

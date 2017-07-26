@@ -56,9 +56,4 @@ app.on("error", err => {
   // console.error(err);
 });
 
-// create server
-app.listen(config.app.port, () => {
-  console.log("The server is running at http://localhost:" + config.app.port);
-});
-
 export default app;
